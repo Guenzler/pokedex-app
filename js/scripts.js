@@ -1,6 +1,22 @@
-// show popup window when opening page
-alert('Hello world');
+let pokemon1 = {
+    name: 'Ivysaur',
+    height: 100,
+    types: ['grass', 'poison'],
+    abilities: ['Chlorophyll', 'Overgrow']
+};
 
-//display favorite food on page
-let favoriteFood = 'chocolate cake';
-document.write(favoriteFood);
+let pokemon2 = {
+    name: 'Jigglypuff',
+    height: 50,
+    types: ['fairy', 'normal'],
+    abilities: ['Cute-charm', 'Friend-guard']
+};
+
+let pokemon3 = {
+    name: 'Spearow',
+    height: 30,
+    types: ['flying', 'normal'],
+    abilities: ['Keen-eye', 'Sniper']
+};
+
+let pokemonList = [pokemon1, pokemon2, pokemon3];
