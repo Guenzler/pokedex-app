@@ -1,0 +1,95 @@
+/* love-ya-like-a-sister-regular - latin */
+@font-face {
+    font-display: swap;
+    /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+    font-family: 'Love Ya Like A Sister';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../fonts/love-ya-like-a-sister-v20-latin-regular.woff2') format('woff2');
+    /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+/* exo-2-regular - latin */
+@font-face {
+    font-display: swap;
+    /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+    font-family: 'Exo 2';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../fonts/exo-2-v21-latin-regular.woff2') format('woff2');
+    /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+/* exo-2-700 - latin */
+@font-face {
+    font-display: swap;
+    /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+    font-family: 'Exo 2';
+    font-style: normal;
+    font-weight: 700;
+    src: url('../fonts/exo-2-v21-latin-700.woff2') format('woff2');
+    /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+:root {
+    --primary-color: #be1313;
+    --text-color: #070808;
+    --page-background-color: #f7f7c7;
+    --font-weight-normal: 400;
+    --font-weight-bold: 700;
+    --font-size-regular: 16pt;
+}
+
+body {
+    background-color: var(--page-background-color);
+    font-family: 'Exo 2', sans-serif;
+    font-weight: var(--font-weight-normal);
+    font-size: var(--font-size-regular);
+    color: var(--text-color);
+    padding: 0 50px;
+    line-height: 1.4;
+}
+
+h1 {
+    font-family: 'Love Ya Like A Sister', sans-serif;
+    font-size: 40pt;
+    font-weight: var(--font-weight-normal);
+    color: var(--primary-color);
+}
+
+h2 {
+    font-family: 'Love Ya Like A Sister', sans-serif;
+    font-size: 22pt;
+    font-weight: var(--font-weight-normal);
+    color: var(--text-color);
+    margin-bottom: 5px;
+}
+
+p {
+    margin-top: 5px;
+    color: var(--text-color);
+}
+
+.highlight {
+    font-weight: var(--font-weight-bold);
+}
+
+.exclaim {
+    color:  var(--primary-color);
+}
+
+@media all and (max-width: 440px) {
+/* decrease font sizes for small screens */
+    body {
+        font-size: 13pt;
+    }
+
+    h1 {
+        font-size: 25pt;
+    }
+
+    h2 {
+        font-size: 18pt;
+    }
+
+}
