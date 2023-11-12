@@ -34,19 +34,19 @@ for (let i = 0; i < pokemonList.length; i++) {
     document.write(`<span class="highlight">Height:</span> ${pokemonList[i].height} cm`);
 
     //determine if this is a big pokemon
-    if (pokemonList[i].height > 70){
+    if (pokemonList[i].height > 70) {
         document.write(`<span class="exclaim"> - Wow, that's big!</span>`);
     }
 
     //display all types of this pokemon
     document.write(`<br><span class="highlight">Types:</span> `);
-    for (let j = 0; j < pokemonList[i].types.length; j++){
+    for (let j = 0; j < pokemonList[i].types.length; j++) {
         document.write(`${pokemonList[i].types[j]} `);
     }
 
     //display all abilities of pokemon
     document.write(`<br><span class="highlight">Abilities:</span> `);
-    for (let k = 0; k < pokemonList[i].abilities.length; k++){
+    for (let k = 0; k < pokemonList[i].abilities.length; k++) {
         document.write(`${pokemonList[i].abilities[k]} `);
     }
     document.write(`</p>`);

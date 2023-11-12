@@ -75,11 +75,12 @@ p {
 }
 
 .exclaim {
-    color:  var(--primary-color);
+    color: var(--primary-color);
 }
 
 @media all and (max-width: 440px) {
-/* decrease font sizes for small screens */
+
+    /* decrease font sizes for small screens */
     body {
         font-size: 13pt;
     }
@@ -90,6 +91,7 @@ p {
 
     h2 {
         font-size: 18pt;
+
     }
 
 }
