@@ -24,30 +24,33 @@ let pokemon3 = {
 let pokemonList = [pokemon1, pokemon2, pokemon3];
 
 //write names and properties of all pokemons in websites DOM
-for (let i = 0; i < pokemonList.length; i++) {
 
+pokemonList.forEach(function (currentPokemon) {
     //write name of pokemon as headline
-    document.write(`<h2>${pokemonList[i].name}</h2>`);
+    document.write(`<h2>${currentPokemon.name}</h2>`);
 
     //in the following paragraph display all properties of pokemon
-    document.write(`<p><span class="highlight">Properties of ${pokemonList[i].name}:</span><br>`);
-    document.write(`<span class="highlight">Height:</span> ${pokemonList[i].height} cm`);
+    document.write(`<p><span class="highlight">Properties of ${currentPokemon.name}:</span><br>`);
+    document.write(`<span class="highlight">Height:</span> ${currentPokemon.height} cm`);
 
     //determine if this is a big pokemon
-    if (pokemonList[i].height > 70) {
+    if (currentPokemon.height > 70) {
         document.write(`<span class="exclaim"> - Wow, that's big!</span>`);
     }
 
     //display all types of this pokemon
     document.write(`<br><span class="highlight">Types:</span> `);
-    for (let j = 0; j < pokemonList[i].types.length; j++) {
-        document.write(`${pokemonList[i].types[j]} `);
-    }
+
+    currentPokemon.types.forEach(function (currentType) {
+        document.write(`${currentType}, `);
+    });
 
     //display all abilities of pokemon
     document.write(`<br><span class="highlight">Abilities:</span> `);
-    for (let k = 0; k < pokemonList[i].abilities.length; k++) {
-        document.write(`${pokemonList[i].abilities[k]} `);
-    }
+
+    currentPokemon.abilities.forEach(function (currentAbility) {
+        document.write(`${currentAbility}, `);
+    });
+
     document.write(`</p>`);
-}
+});
