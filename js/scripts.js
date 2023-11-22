@@ -20,12 +20,34 @@ let pokemon3 = {
     abilities: ['Keen-eye', 'Sniper']
 };
 
-// define list of pokemons
-let pokemonList = [pokemon1, pokemon2, pokemon3];
+// wrap list of pokemons into IIFE
+let pokemonRepository = (function () {
+    let pokemonList = [pokemon1, pokemon2, pokemon3];
+
+    // function to add new pokemon to pokemonList
+    function add(pokemon) {
+        if (typeof (pokemon) !== 'object') {
+            return 'wrong data type';
+        } else if ((Object.keys(pokemon).length === 4) && (Object.keys(pokemon)[0] === 'name' && Object.keys(pokemon)[1] === 'height' && Object.keys(pokemon)[2] === 'types' && Object.keys(pokemon)[3] === 'abilities')) {
+            pokemonList.push(pokemon);
+        } else {
+            return 'object keys don\'t match expected keys';
+        }
+    }
+
+    //function to return the array pokemonList
+    function getAll() {
+        return pokemonList;
+    }
+
+    return {
+        add: add,
+        getAll: getAll
+    };
+})();
 
 //write names and properties of all pokemons in websites DOM
-
-pokemonList.forEach(function (currentPokemon) {
+pokemonRepository.getAll().forEach(function (currentPokemon) {
     //write name of pokemon as headline
     document.write(`<h2>${currentPokemon.name}</h2>`);
 
