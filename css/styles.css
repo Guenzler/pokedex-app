@@ -34,10 +34,12 @@
 :root {
     --primary-color: #be1313;
     --text-color: #070808;
-    --page-background-color: #f7f7c7;
+    --page-background-color: #f0f0f0;
+    --background-list-color: #c2c0a2;
     --font-weight-normal: 400;
     --font-weight-bold: 700;
     --font-size-regular: 16pt;
+    --button-color: #ffffff;
 }
 
 body {
@@ -50,11 +52,23 @@ body {
     line-height: 1.4;
 }
 
+* {
+    box-sizing: border-box;
+}
+
+.backgroundForList {
+    width: 500px;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
 h1 {
     font-family: 'Love Ya Like A Sister', sans-serif;
     font-size: 40pt;
     font-weight: var(--font-weight-normal);
     color: var(--primary-color);
+    width: 100%;
+    text-align: center;
 }
 
 h2 {
@@ -78,20 +92,70 @@ p {
     color: var(--primary-color);
 }
 
+ul {
+    display: block;
+    width: 100%;
+    list-style: none;
+    background-color: var(--background-list-color);
+    padding: 1px;
+}
+
+ul li {
+    margin: 10px;
+    display: block;
+}
+
+.listItemButton {
+    border: none;
+    width: 100%;
+    font-family: inherit;
+    font-weight: var(--font-weight-bold);
+    font-size: 20pt;
+
+    /* styles the background color, font color, and text decoration (underline, etc.) of the button */
+    background-color: var(--button-color);
+    color: var(--primary-color);
+    text-decoration: none;
+
+    /* adds spacing to the button  */
+    padding: 14px 20px;
+    border-radius: 4px;
+
+    /* defining transition for the  button  */
+    transition: background-color 0.7s;
+}
+
+.listItemButton:hover,
+.listItemButton:focus {
+    /* change mouse, button color and text color */
+    cursor: pointer;
+    background-color: var(--primary-color);
+    color: var(--button-color)
+}
+
+
 @media all and (max-width: 440px) {
 
-    /* decrease font sizes for small screens */
+    /* decrease font sizes and padding for small screens */
     body {
         font-size: 13pt;
+        padding: 0 20px;
     }
 
     h1 {
         font-size: 25pt;
     }
 
-    h2 {
-        font-size: 18pt;
+    .listItemButton {
+        font-size: 16pt;
+    }
 
+    ul {
+        padding: 5px;
+    }
+
+    ul li {
+        margin: 10px 5px;
     }
 
 }

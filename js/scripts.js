@@ -20,7 +20,7 @@ let pokemon3 = {
     abilities: ['Keen-eye', 'Sniper']
 };
 
-// wrap list of pokemons into IIFE
+// IIFE containing repository of pokemons and functions to access them
 let pokemonRepository = (function () {
     let pokemonList = [pokemon1, pokemon2, pokemon3];
 
@@ -40,39 +40,48 @@ let pokemonRepository = (function () {
         return pokemonList;
     }
 
+    //write details of pokemon to console if button is clicked
+    function displayPropertiesOnClick(pokemon, button) {
+        button.addEventListener('click', function () {
+            showDetails(pokemon);
+        });
+    }
+
+    //function to add one pokemon to list displayed on websites DOM
+    function addListItem(pokemon) {
+        let displayPokemonList = document.querySelector('.pokemon-list');
+        let listItem = document.createElement('li');
+        let button = document.createElement('button');
+        button.innerText = pokemon.name;
+        button.classList.add('listItemButton');
+        listItem.appendChild(button);
+        displayPokemonList.appendChild(listItem);
+        displayPropertiesOnClick(pokemon, button);
+    }
+
+    // write details of pokemon to console
+    function showDetails(pokemon) {
+        console.log(pokemon.name);
+        console.log('pokemon height: ' + pokemon.height);
+        console.log('pokemon types:');
+        pokemon.types.forEach(function (currentType) {
+            console.log(currentType);
+        })
+        console.log('pokemon abilities:');
+        pokemon.abilities.forEach(function (currentAbility) {
+            console.log(currentAbility);
+        })
+    }
+
     return {
         add: add,
-        getAll: getAll
+        getAll: getAll,
+        addListItem: addListItem,
+        showDetails: showDetails
     };
 })();
 
-//write names and properties of all pokemons in websites DOM
+//display all pokemons on website
 pokemonRepository.getAll().forEach(function (currentPokemon) {
-    //write name of pokemon as headline
-    document.write(`<h2>${currentPokemon.name}</h2>`);
-
-    //in the following paragraph display all properties of pokemon
-    document.write(`<p><span class="highlight">Properties of ${currentPokemon.name}:</span><br>`);
-    document.write(`<span class="highlight">Height:</span> ${currentPokemon.height} cm`);
-
-    //determine if this is a big pokemon
-    if (currentPokemon.height > 70) {
-        document.write(`<span class="exclaim"> - Wow, that's big!</span>`);
-    }
-
-    //display all types of this pokemon
-    document.write(`<br><span class="highlight">Types:</span> `);
-
-    currentPokemon.types.forEach(function (currentType) {
-        document.write(`${currentType}, `);
-    });
-
-    //display all abilities of pokemon
-    document.write(`<br><span class="highlight">Abilities:</span> `);
-
-    currentPokemon.abilities.forEach(function (currentAbility) {
-        document.write(`${currentAbility}, `);
-    });
-
-    document.write(`</p>`);
+    pokemonRepository.addListItem(currentPokemon);
 });
