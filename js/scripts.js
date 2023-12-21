@@ -4,7 +4,6 @@ let loadMore = document.querySelector('.loadMoreButton');
 
 // IIFE containing repository of pokemons and functions to access them
 let pokemonRepository = (function () {
-    let modalContainer = document.querySelector('#modal-container');
     let pokemonList = [];
     let apiUrl = 'https://pokeapi.co/api/v2/pokemon/';
 
@@ -44,25 +43,19 @@ let pokemonRepository = (function () {
     //show a modal on top of list of pokemons that displays the detais of the clicked pokemon
     function showModal(pokemon) {
 
-        //Clear all existing modal content
-        modalContainer.innerHTML = '';
+        // get the header and body of bootstrap modal
+        let modalBody = document.querySelector('.modal-body');
+        let modalTitle = document.querySelector('.modal-title');
+        let modalHeader = document.querySelector('.modal-header');
 
-        let modal = document.createElement('div');
-        modal.classList.add('modal');
-
-        let closeButtonElement = document.createElement('button');
-        closeButtonElement.classList.add('modal-close');
-        closeButtonElement.innerText = 'close';
-        closeButtonElement.addEventListener('click', hideModal);
-
-        //read all pokemon abilities from array pokemon.abilities
+        //read pokemon abilities and create string for display
         let allPokemonAbilities = '';
         pokemon.abilities.forEach(function (current) {
             allPokemonAbilities += ('<span class = "pokemonAbility">' + current.ability.name + '</span> ');
         });
         let pokemonAbilities = `Abilities: ${allPokemonAbilities}`;
 
-        //read all pokemon types from array pokemon.types
+        //read all pokemon types and create string for display
         let allPokemonTypes = ''
         pokemon.types.forEach(function (current) {
             allPokemonTypes += ('<span class = "pokemonTypes">' + current.type.name + '</span> ');
@@ -84,59 +77,57 @@ let pokemonRepository = (function () {
         let contentElement3 = document.createElement('p');
         contentElement3.innerHTML = pokemonTypes;
 
-        modal.appendChild(closeButtonElement);
-        modal.appendChild(titleElement);
-        modal.appendChild(imageElement);
+        //modal.appendChild(closeButtonElement);
+        modalTitle.appendChild(titleElement);
+        modalBody.appendChild(imageElement);
 
         // check if image showing pokemon from back exists 
         if (pokemon.imageUrlBack) {
             let imageElement2 = document.createElement('img');
             imageElement2.src = pokemon.imageUrlBack;
-            modal.appendChild(imageElement2);
+            modalBody.appendChild(imageElement2);
         }
 
-        modal.appendChild(contentElement1);
-        modal.appendChild(contentElement2);
-        modal.appendChild(contentElement3);
-        modalContainer.appendChild(modal);
+        modalBody.appendChild(contentElement1);
+        modalBody.appendChild(contentElement2);
+        modalBody.appendChild(contentElement3);
 
-        modalContainer.classList.add('is-visible');
-
-        modalContainer.addEventListener('click', function (e) {
-            let target = e.target;
-            if (target === modalContainer) {
-                hideModal();
-            }
-        });
     }
-
-    function hideModal() {
-
-        modalContainer.classList.remove('is-visible');
-    }
-
-    //remove Modal when escape key is hit
-    window.addEventListener('keydown', function (event) {
-
-        if (event.key === 'Escape' && modalContainer.classList.contains('is-visible')) {
-            hideModal();
-        }
-    });
 
     //if user clicks a pokemon, call function to first load details then display them
     function displayPropertiesOnClick(pokemon, button) {
         button.addEventListener('click', function () {
+
+            //clear existing modal content before calling function to load Details to avoid showing old data
+            document.querySelector('.modal-body').innerHTML = '';
+            document.querySelector('.modal-title').innerHTML = '';
+
             showDetails(pokemon);
         });
+    }
+
+    function getRandomColor() {
+        let colorArray = ['color1Button', 'color2Button', 'color3Button', 'color4Button', 'color5Button', 'color6Button'];
+        let randomInteger = Math.floor(Math.random() * 6);
+        return colorArray[randomInteger];
     }
 
     //function to add one pokemon to list displayed on websites DOM
     function addListItem(pokemon) {
         let displayPokemonList = document.querySelector('.pokemon-list');
         let listItem = document.createElement('li');
+        listItem.classList.add('list-group-item');
+        listItem.classList.add('col-12');
+        listItem.classList.add('col-sm-6');
+        listItem.classList.add('col-md-4');
+        listItem.classList.add('col-xl-3');
         let button = document.createElement('button');
         button.innerText = pokemon.name;
-        button.classList.add('listItemButton');
+        button.classList.add('btn');
+        button.classList.add(getRandomColor());
+        button.classList.add('btn-block');
+        button.setAttribute('data-toggle', 'modal');
+        button.setAttribute('data-target', '#exampleModal');
         listItem.appendChild(button);
         displayPokemonList.appendChild(listItem);
         displayPropertiesOnClick(pokemon, button);
@@ -179,8 +170,10 @@ let pokemonRepository = (function () {
 //show how many pokemons are displayed on website
 function showNumberDisplayedPokemons() {
     let displayNumberPokemons = document.querySelector('#displayNumberPokemons');
+    let showNumberInNavbar = document.querySelector('#showNumberInNavbar');
     let number = pokemonRepository.getAll().length;
-    displayNumberPokemons.innerText = `${number} of ${count} shown`;
+    displayNumberPokemons.innerText = `${number} pokemons of ${count} shown`;
+    showNumberInNavbar.innerText = `${number} pokemons of ${count} loaded`;
 }
 
 //on loading page display the first batch of pokemons on website
@@ -211,4 +204,86 @@ loadMore.addEventListener('click', function () {
         }
     });
 
-})
+});
+
+/*************************************************************** */
+/* search function, display of results and some basic navigation */
+/*****************************************************************/
+
+let backToListButton = document.querySelector('.backToList');
+let loadMoreButton = document.querySelector('.loadMoreButton');
+let inputField = document.querySelector('input');
+
+//listening to click on search button and enter key on input field
+
+document.querySelector('.searchButton').addEventListener('click', function (event) {
+    event.preventDefault();
+    searchPage();
+});
+
+inputField.addEventListener('keydown', function (event) {
+    if (event.key === 'Enter') {
+        event.preventDefault();
+        searchPage();
+    }
+});
+
+function hideBackToListButton() {
+    // show loadMore Button only when there are pokemons left to load
+    if (loadMoreButton.classList.contains('invisible') && (pokemonRepository.getAll().length < count)) {
+        loadMoreButton.classList.remove('invisible');
+    }
+
+    // make sure to add the class invisible only once
+    if (!(backToListButton.classList.contains('invisible'))) {
+        backToListButton.classList.add('invisible');
+    }
+}
+
+function showBackToListButton() {
+    if (backToListButton.classList.contains('invisible')) {
+        backToListButton.classList.remove('invisible');
+    }
+    // make sure to add the class invisible only once
+    if (!(loadMoreButton.classList.contains('invisible'))) {
+        loadMoreButton.classList.add('invisible');
+    }
+}
+
+backToListButton.addEventListener('click', function (event) {
+    //empty page
+    document.querySelector('.pokemon-list').innerHTML = '';
+    document.querySelector('.displayInfoText').innerText = 'click on Pokemon name to show more details +++ scroll down and click load more to show more pokemons';
+
+    //display all currently downloaded pokemons
+    pokemonRepository.getAll().forEach(function (pokemon) {
+        pokemonRepository.addListItem(pokemon);
+    });
+    showNumberDisplayedPokemons();
+    hideBackToListButton();
+});
+
+function searchPage() {
+    let string = inputField.value.toUpperCase();
+    let number = pokemonRepository.getAll().length;
+
+    if (string !== '') {
+        // empty page 
+        document.querySelector('.pokemon-list').innerHTML = '';
+        document.querySelector('#displayNumberPokemons').innerText = 'searched within ' + number + ' pokemons';
+
+        pokemonRepository.getAll().forEach(function (currentPokemon) {
+            let currentPokemonName = currentPokemon.name.toUpperCase();
+            if (currentPokemonName.indexOf(string) >= 0) {
+                pokemonRepository.addListItem(currentPokemon);
+            }
+        });
+
+        if (document.querySelector('.pokemon-list').innerHTML === '') {
+            document.querySelector('.displayInfoText').innerText = 'no pokemon found';
+        } else {
+            document.querySelector('.displayInfoText').innerText = 'click on pokemon name to show more details';
+        }
+    }
+    showBackToListButton();
+}
