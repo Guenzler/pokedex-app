@@ -40,7 +40,7 @@ let pokemonRepository = (function () {
         })
     }
 
-    //show a modal on top of list of pokemons that displays the detais of the clicked pokemon
+    //show a modal on top of list of pokemons that displays the details of the clicked pokemon
     function showModal(pokemon) {
 
         // get the header and body of bootstrap modal
@@ -48,19 +48,25 @@ let pokemonRepository = (function () {
         let modalTitle = document.querySelector('.modal-title');
         let modalHeader = document.querySelector('.modal-header');
 
-        //read pokemon abilities and create string for display
-        let allPokemonAbilities = '';
+        //read pokemon abilities and create p element for display
+        let allPokemonAbilities = document.createElement('p');
+        allPokemonAbilities.innerText = 'Abilities: '
         pokemon.abilities.forEach(function (current) {
-            allPokemonAbilities += ('<span class = "pokemonAbility">' + current.ability.name + '</span> ');
+            let newAbility = document.createElement('span');
+            newAbility.classList.add('pokemonAbility');
+            newAbility.innerText = current.ability.name;
+            allPokemonAbilities.appendChild(newAbility);
         });
-        let pokemonAbilities = `Abilities: ${allPokemonAbilities}`;
 
-        //read all pokemon types and create string for display
-        let allPokemonTypes = ''
+        //read pokemon types and create p element for display
+        let allPokemonTypes = document.createElement('p');
+        allPokemonTypes.innerText = 'Types: ';
         pokemon.types.forEach(function (current) {
-            allPokemonTypes += ('<span class = "pokemonTypes">' + current.type.name + '</span> ');
+            let newType = document.createElement('span');
+            newType.classList.add('pokemonTypes');
+            newType.innerText = current.type.name;
+            allPokemonTypes.appendChild(newType);
         });
-        let pokemonTypes = `Types: ${allPokemonTypes}`;
 
         let titleElement = document.createElement('h1');
         titleElement.innerText = pokemon.name;
@@ -68,16 +74,9 @@ let pokemonRepository = (function () {
         let imageElement = document.createElement('img');
         imageElement.src = pokemon.imageUrl;
 
-        let contentElement1 = document.createElement('p');
-        contentElement1.innerText = `Height: ${pokemon.height}`;
+        let pokemonHeight = document.createElement('p');
+        pokemonHeight.innerText = `Height: ${pokemon.height}`;
 
-        let contentElement2 = document.createElement('p');
-        contentElement2.innerHTML = pokemonAbilities;
-
-        let contentElement3 = document.createElement('p');
-        contentElement3.innerHTML = pokemonTypes;
-
-        //modal.appendChild(closeButtonElement);
         modalTitle.appendChild(titleElement);
         modalBody.appendChild(imageElement);
 
@@ -88,9 +87,9 @@ let pokemonRepository = (function () {
             modalBody.appendChild(imageElement2);
         }
 
-        modalBody.appendChild(contentElement1);
-        modalBody.appendChild(contentElement2);
-        modalBody.appendChild(contentElement3);
+        modalBody.appendChild(pokemonHeight);
+        modalBody.appendChild(allPokemonAbilities);
+        modalBody.appendChild(allPokemonTypes);
 
     }
 
