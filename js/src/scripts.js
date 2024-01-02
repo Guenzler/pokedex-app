@@ -12,7 +12,9 @@ let pokemonRepository = (function () {
         if (typeof (pokemon) === 'object' && 'name' in pokemon && 'detailsUrl' in pokemon) {
             pokemonList.push(pokemon);
         } else {
+            /* eslint-disable no-console */
             console.log('wrong data type');
+            /* eslint-enable no-console */
         }
     }
 
@@ -36,7 +38,9 @@ let pokemonRepository = (function () {
                 add(pokemon);
             });
         }).catch(function (e) {
+            /* eslint-disable no-console */
             console.error(e);
+            /* eslint-enable no-console */
         })
     }
 
@@ -46,7 +50,6 @@ let pokemonRepository = (function () {
         // get the header and body of bootstrap modal
         let modalBody = document.querySelector('.modal-body');
         let modalTitle = document.querySelector('.modal-title');
-        let modalHeader = document.querySelector('.modal-header');
 
         //read pokemon abilities and create p element for display
         let allPokemonAbilities = document.createElement('p');
@@ -145,7 +148,9 @@ let pokemonRepository = (function () {
             item.types = details.types;
             item.abilities = details.abilities;
         }).catch(function (e) {
+            /* eslint-disable no-console */
             console.error(e);
+            /* eslint-enable no-console */
         });
     }
 
@@ -249,7 +254,7 @@ function showBackToListButton() {
     }
 }
 
-backToListButton.addEventListener('click', function (event) {
+backToListButton.addEventListener('click', function () {
     //empty page
     document.querySelector('.pokemon-list').innerHTML = '';
     document.querySelector('.displayInfoText').innerText = 'click on Pokemon name to show more details +++ scroll down and click load more to show more pokemons';
